@@ -15,6 +15,10 @@ export class Consumer {
          * @type {Redis}
          */
         this.redis = redis;
+        /**
+         * @type {*[]}
+         */
+        this.payloads = null;
 
         this._initialize();
     }
@@ -67,16 +71,16 @@ export class Consumer {
 
     /**
      * @abstract
-     * @param {*[]} payloads 
      */
-    async _run(payloads) {
+    async _run() {
+        return false;
     }
 
     async run() {
-        if (!this._hasPayload())
-            return await this._run(null);
+        if (this._hasPayload())
+            this.payloads = await this.#loadPayloads();
 
-        return await this._run(await this.#loadPayloads());
+        return await this._run();
     }
 
     /**
