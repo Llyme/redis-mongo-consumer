@@ -45,7 +45,7 @@ export class Consumer {
     async #loadPayloads() {
         const payloads = [];
 
-        const rawPayloads = this._loadPayloads();
+        const rawPayloads = await this._loadPayloads();
 
         for (const rawPayload of rawPayloads)
             try {
